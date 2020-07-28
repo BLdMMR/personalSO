@@ -23,3 +23,65 @@ inline bool isListEmpty(LIST_ENTRY * listHead) {
     return (bool)(listHead->flink == listHead);
 }
 
+__attribute__((always_inline))
+inline bool removeEntryList(PLIST_ENTRY entry) {
+    PLIST_ENTRY flink;
+    PLIST_ENTRY blink;
+
+    flink = entry->flink;
+    blink = entry->blink;
+    flink->blink = blink;
+    blink->flink = flink;
+
+    return flink == blink;
+}
+
+__attribute__((always_inline))
+inline PLIST_ENTRY removeHeadList(PLIST_ENTRY listHead) {
+    PLIST_ENTRY flink;
+    PLIST_ENTRY entry;
+
+    entry = listHead->flink;
+    flink = entry->flink;
+    listHead->flink = flink;
+    flink->blink = listHead;
+
+    return entry;
+}
+
+__attribute__((always_inline))
+inline PLIST_ENTRY removeTailList(PLIST_ENTRY listHead) {
+    PLIST_ENTRY blink;
+    PLIST_ENTRY entry;
+
+    entry = listHead->blink;
+    blink = entry->blink;
+    listHead->blink = blink;
+    blink->flink = listHead;
+
+    return entry;
+}
+
+__attribute__((always_inline))
+inline void insertHeadList(PLIST_ENTRY listHead, PLIST_ENTRY entry) {
+    PLIST_ENTRY flink;
+
+    flink = listHead->flink;
+    listHead->flink = entry;
+    entry->flink = flink;
+    flink->blink = entry;
+    entry->blink = listHead;
+}
+
+__attribute__((always_inline))
+inline void insertTailList(PLIST_ENTRY listHead, PLIST_ENTRY entry) {
+    PLIST_ENTRY blink;
+
+    blink = listHead->blink;
+    listHead->blink = entry;
+    entry->blink = blink;
+    blink->flink = entry;
+    entry->flink = listHead;
+}
+
+#endif
