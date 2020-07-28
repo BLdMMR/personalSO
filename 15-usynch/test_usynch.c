@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#include "uthread.h"
-#include "usynch.h"
+#include "include/uthread.h"
+#include "include/usynch.h"
 
 EVENT general_event;
 
@@ -23,7 +23,7 @@ void waiting_thread(void *arg) {
 int main() {
     ut_init();
 
-    ut_event_init(%general_event);
+    ut_event_init(&general_event);
 
     ut_create(signaling_thread, NULL);
     

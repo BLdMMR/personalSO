@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "uthread.h"
+#include "include/uthread.h"
 
 void f1(void * arg) {
     const char * str = (const char *) arg;

@@ -1,8 +1,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "list.h"
-#include "uthread.h"
+#include "include/list.h"
+#include "include/uthread.h"
 #include "uthread_internal.h"
 
 #define STACK_SIZE (8*4096)
@@ -26,7 +26,7 @@ PUTHREAD running_thread;
 static PUTHREAD main_thread;
 
 void internal_start() {
-    running_thread = start_routine(running_thread->argument);
+    running_thread->start_routine(running_thread->argument);
 
     ut_exit();
 }
@@ -104,7 +104,7 @@ void ut_create (void (*start_routine)(void *), void *arg) {
         thread->sp = (uint64_t)context;
 
         number_of_threads += 1;
-        insertTailList(&ready_queue, &(thread->node);
+        insertTailList(&ready_queue, &(thread->node));
 }
 
 void ut_exit() {
